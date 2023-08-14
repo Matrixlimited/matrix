@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "5000:5000"
+    networks:
+       - local_network
+  
+  frontend:
+    build: ./frontend/telefront
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    networks:
+       - local_network
+    
+networks:
+  local_network:
+    external: true
