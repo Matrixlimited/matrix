@@ -7,7 +7,12 @@ services:
       - "5000:5000"
     networks:
        - local_network
-  
+    volumes:
+    - type: bind
+      source: ~/Desktop/test
+      target: /usr/src/app/data
+      
+
   frontend:
     build: ./frontend/telefront
     container_name: frontend

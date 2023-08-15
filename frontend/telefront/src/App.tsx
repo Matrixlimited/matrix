@@ -2,23 +2,34 @@ import React, { useState, FC } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Card from "./components/Card";
-import { Login, Verification } from "./utils/flaskApi";
+import { Login, LoginResponse, Verification } from "./utils/flaskApi";
 import LoginForm from "./modules/LoginForm";
 import VerificationForm from "./modules/VerificationForm";
 
 const App: FC = () => {
-  const [login, setLogin] = useState<string>();
+  const [login, setLogin] = useState<LoginResponse | "">();
 
   const handeVerificationSubmit = async (verificationCode: string) => {
     const data = await Verification(verificationCode);
+    setLogin("");
   };
   const handleLoginSubmit = async (
     apiId: string,
     apiHash: string,
-    phoneNumber: string
+    phoneNumber: string,
+    sourceGroup: string,
+    letterKey: string,
+    offset: string
   ) => {
-    const data = await Login(apiId, apiHash, phoneNumber);
-    //data && setLogin(data);z
+    const data = await Login(
+      apiId,
+      apiHash,
+      phoneNumber,
+      sourceGroup,
+      letterKey,
+      offset
+    );
+    data && setLogin(data);
   };
   return (
     <div className="container px-6 mx-auto mt-10">
@@ -30,7 +41,13 @@ const App: FC = () => {
         <Card className="w">
           <LoginForm onSubmit={handleLoginSubmit} />
         </Card>
-
+        {login && (
+          <div className="text-center mt-4">
+            <p className="text-xl font-bold text-gray-800">
+              <span>{login.status}</span>
+            </p>
+          </div>
+        )}
         <Card className="w">
           <VerificationForm onSubmit={handeVerificationSubmit} />
         </Card>

@@ -1,19 +1,30 @@
 import React, { useState } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { off } from "process";
 
 interface InputFormProps {
-  onSubmit: (apiId: string, apiHash: string, phoneNumber: string) => void;
+  onSubmit: (
+    apiId: string,
+    apiHash: string,
+    phoneNumber: string,
+    sourceGroup: string,
+    letterKey: string,
+    offset: string
+  ) => void;
 }
 
 const LoginForm: React.FC<InputFormProps> = ({ onSubmit }) => {
   const [apiId, setApiId] = useState("");
   const [apiHash, setApiHash] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [sourceGroup, setSourceGroup] = useState("");
+  const [letterKey, setLetterKey] = useState("");
+  const [offset, setOffset] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(apiId, apiHash, phoneNumber);
+    onSubmit(apiId, apiHash, phoneNumber, sourceGroup, letterKey, offset);
   };
 
   return (
@@ -48,6 +59,36 @@ const LoginForm: React.FC<InputFormProps> = ({ onSubmit }) => {
           value={phoneNumber}
           required
           onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+      </div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="sourceGroup">Source Group:</label>
+        <Input
+          type="text"
+          id="sourceGroup"
+          value={sourceGroup}
+          required
+          onChange={(e) => setSourceGroup(e.target.value)}
+        />
+      </div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="letterKey">Letter Key:</label>
+        <Input
+          type="text"
+          id="letterKey"
+          value={letterKey}
+          required
+          onChange={(e) => setLetterKey(e.target.value)}
+        />
+      </div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="offset">Offset:</label>
+        <Input
+          type="text"
+          id="offset"
+          value={offset}
+          required
+          onChange={(e) => setOffset(e.target.value)}
         />
       </div>
 
