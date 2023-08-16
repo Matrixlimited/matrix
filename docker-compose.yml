@@ -9,7 +9,7 @@ services:
        - local_network
     volumes:
     - type: bind
-      source: ~/Desktop/test
+      source: ~/Desktop/data
       target: /usr/src/app/data
       
 
